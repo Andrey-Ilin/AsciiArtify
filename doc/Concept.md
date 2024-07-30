@@ -80,7 +80,7 @@ https://k3d.io/v5.7.2/
 
 In this demo, we'll walk through setting up a `minikube` cluster with three nodes and deploying a simple "Hello World" application. We'll expose the application via a service, scale the deployment to five replicas, and demonstrate accessing the application. Finally, we'll clean up the resources and stop the `minikube` cluster
 
-![Image](../.data/demo.gif)
+![Image](../.data/demo-minikube.gif)
 
 # Minikube vs Kind vs k3d for Local Kubernetes Development
 

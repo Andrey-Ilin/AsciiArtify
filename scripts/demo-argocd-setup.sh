@@ -49,7 +49,7 @@ echo "Get all resources across all namespaces to verify Argo CD installation"
 echo "kubectl get all -A"
 echo "##################################"
 kubectl get all -A
-sleep 6
+sleep 15
 clear
 
 # Port-forward the Argo CD server service to access the web UI
@@ -61,11 +61,3 @@ kubectl port-forward svc/argocd-server -n argocd 8080:443
 sleep 6
 clear
 
-# Retrieve the initial admin password for Argo CD
-echo "##################################"
-echo "Retrieve the initial admin password for Argo CD"
-echo "kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath=\"{.data.password}\" | base64 -d; echo"
-echo "##################################"
-kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
-sleep 6
-clear
