@@ -6,7 +6,7 @@ This document provides a video demonstration of our application running within A
 
 ## Video Demonstration
 
-[![Watch the Demo](../.data/demo-argocd-local.gif)](../.data/demo-argocd-local.mov)
+![Image](../.data/demo-argocd-local.gif)
 
 ## Conclusion
 
