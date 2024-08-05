@@ -1,0 +1,61 @@
+#!/bin/bash
+
+# kubectl-showstatistic - A kubectl plugin to show resource statistics
+#
+# This script retrieves and displays resource usage statistics for Kubernetes nodes or pods.
+#
+# Installation:
+# 1. Save this script as 'kubectl-showstatistic' (without any file extension) in a directory
+#    that's in your PATH (e.g., /home/codespace/.local/bin/ or /usr/local/bin/).
+# 2. Make the script executable:
+#    chmod +x /path/to/kubectl-showstatistic
+#
+# Usage:
+#   kubectl showstatistic <resource_type> <namespace>
+#
+# Arguments:
+#   <resource_type>: Either 'nodes' or 'pods'
+#   <namespace>: The namespace to query
+#
+# Examples:
+#   - Show statistics for pods in the default namespace:
+#     kubectl showstatistic pods default
+#
+#   - Show statistics for nodes (namespace argument is required but not used):
+#     kubectl showstatistic nodes default
+#
+# Notes:
+# - Requires the 'kubectl top' command to be available and functioning in your cluster.
+# - Ensure kubectl is properly configured to connect to your desired Kubernetes cluster.
+# - This script does not handle statistics across all namespaces.
+# - For nodes, the namespace argument is required but not used in the kubectl command.
+
+# Define command-line arguments
+
+RESOURCE_TYPE=$1
+NAMESPACE_NAME=$2
+
+case "$RESOURCE_TYPE" in
+    nodes|pods)
+        echo
+        ;;
+    *)
+        echo "Error: Input or resource type must be 'nodes' or 'pods'"
+        exit 1
+        ;;
+esac
+
+# Retrieve resource usage statistics from Kubernetes
+kubectl top $RESOURCE_TYPE -n $NAMESPACE_NAME | tail -n +2 | while read line
+do
+  # Extract CPU and memory usage from the output
+  NAME=$(echo $line | awk '{print $1}')
+  CPU=$(echo $line | awk '{print $2}')
+  MEMORY=$(echo $line | awk '{print $3}')
+
+  # Output the statistics to the console
+  # "Resource, Namespace, Name, CPU, Memory"
+  echo "${RESOURCE_TYPE}, ${NAMESPACE_NAME}, ${NAME}, ${CPU}, ${MEMORY}"
+done
+
+echo
