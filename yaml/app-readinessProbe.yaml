@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app-readinessprob
+spec:
+  containers:
+    - name: devops-gcr
+      image: us-west2-docker.pkg.dev/annular-mesh-431721-j0/devops/gcr.io/k8s-k3s/demo:v1.0.0
+      ports:
+        - containerPort: 8000
+      livenessProbe:
+        httpGet:
+          path: /
+          port: 8000
+        initialDelaySeconds: 5
+        timeoutSeconds: 1
+        periodSeconds: 10
+        failureThreshold: 3
+      readinessProbe:
+        httpGet:
+          path: /ready
+          port: 8000
+        periodSeconds: 2
+        successThreshold: 1
+        failureThreshold: 3
